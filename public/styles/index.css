@@ -1,0 +1,22 @@
+a {
+    color: #00b7ff;
+}
+
+#content {
+    width: 80rem;
+    margin: 0 auto;
+}
+
+#room{
+	background-color: #ddd;
+	margin-bottom: 1.2rem;
+}
+#messages{
+	height:30rem;
+	overflow: auto;
+	background-color: #eee;
+	margin: 1rem 0;
+}
+#help{
+	margin-top: 1rem;
+}

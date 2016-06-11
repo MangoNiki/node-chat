@@ -16,13 +16,19 @@ var server = http.createServer(function(request, response) {
         filePath = './public' + requestUrl;
     }
 
-    serveStatic(response, cache, filePath);
+    // serveStatic(response, cache, filePath);
+    serveStatic_dev(response, cache, filePath);
 });
 
 //监听端口，启动服务器
 server.listen(3000, function() {
     console.info('Server listening on port 3000....');
 });
+
+//Socket.IO监听服务器
+const chatServer = require('./lib/chat-server');
+chatServer.listen(server);
+
 
 //发送静态文件
 function serveStatic(response, cache, absPath) {
@@ -44,6 +50,22 @@ function serveStatic(response, cache, absPath) {
             }
         });
     }
+}
+
+function serveStatic_dev(response, cache, absPath) {
+    fs.exists(absPath, function(exists) {
+        if (exists) {
+            fs.readFile(absPath, function(err, data) {
+                if (err) {
+                    redirectTo_404(response);
+                } else {
+                    sendFile(response, absPath, data);
+                }
+            });
+        } else {
+            redirectTo_404(response);
+        }
+    });
 }
 
 //处理404 错误
@@ -77,4 +99,3 @@ function sendFile(response, absPath, content) {
     });
     response.end(content);
 }
-
